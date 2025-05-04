@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happiness x Extroversion</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #f9a8d4, #ec4899);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .flipbook {
+      width: 300px;
+      height: 450px;
+      position: relative;
+      perspective: 2000px;
+    }
+
+    .page {
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 1s ease-out, opacity 1s ease-out;
+      transform-origin: left center;
+    }
+
+    .page h2, .page p {
+      transition: transform 1s ease-out;
+    }
+
+    .page.flipped {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .page h2, .page p {
+      transform: translateX(0);
+    }
+
+    .page h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #ec4899;
+    }
+
+    .page p {
+      font-size: 16px;
+      text-align: center;
+      color: #444;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      border: none;
+      background: #ec4899;
+      color: white;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background: #db2777;
+    }
+  </style>
+</head>
+<body>
+  <audio id="flipSound" src="https://www.soundjay.com/books/page-flip-4.mp3" preload="auto"></audio>
+
+  <div class="flipbook" id="flipbook">
+    <div class="page" data-index="0">
+      <h2>Happiness x Extroversion</h2>
+      <p>Welcome! Swipe or click to explore uplifting thoughts.</p>
+    </div>
+    <div class="page" data-index="1">
+      <h2>FIND YOUR INNER BALANCE</h2>
+      <p>"Happiness is not something ready made. It comes from your own actions." - Dalai Lama</p>
+    </div>
+    <div class="page" data-index="2">
+      <h2>HAPPINESS & ACTION</h2>
+      <p>"Action may not bring happiness but there is no happiness without action."</p>
+    </div>
+    <div class="page" data-index="3">
+      <h2>FOCUS ON NOW</h2>
+      <p>"Do not dwell in the past... concentrate on the present moment." - Buddha</p>
+    </div>
+    <div class="page" data-index="4">
+      <h2>LOVE YOUR WORK</h2>
+      <p>"The only way to do great work is to love what you do." - Steve Jobs</p>
+    </div>
+    <div class="page" data-index="5">
+      <h2>SPREAD POSITIVITY</h2>
+      <p>"Thousands of candles can be lighted from a single candle." - Buddha</p>
+    </div>
+    <div class="page" data-index="6">
+      <h2>BE PRESENT</h2>
+      <p>"Realize deeply that the present moment is all you ever have." - Eckhart Tolle</p>
+    </div>
+    <div class="page" data-index="7">
+      <h2>EMBRACE CONNECTION</h2>
+      <p>"Connection is why we're here; it gives purpose and meaning to our lives." - Brené Brown</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="prevPage()">Back</button>
+    <button onclick="nextPage()">Next</button>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const pages = document.querySelectorAll('.page');
+    const flipSound = document.getElementById('flipSound');
+
+    function updatePages() {
+      pages.forEach((page, i) => {
+        if (i < currentIndex) {
+          page.classList.add('flipped');
+          page.style.zIndex = i;
+        } else {
+          page.classList.remove('flipped');
+          page.style.zIndex = pages.length - i;
+        }
+      });
+    }
+
+    function playFlipSound() {
+      flipSound.currentTime = 0;
+      flipSound.play();
+    }
+
+    function nextPage() {
+      if (currentIndex < pages.length - 1) {
+        currentIndex++;
+        playFlipSound();
+        updatePages();
+      }
+    }
+
+    function prevPage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        playFlipSound();
+        updatePages();
+      }
+    }
+
+    updatePages();
+  </script>
+</body>
+  </html>
